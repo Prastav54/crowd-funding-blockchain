@@ -25,6 +25,8 @@ contract CampaignFunding{
 
   uint256 campaignId = 0;
 
+  event CampaignCreated(Campaign);
+
   function createCampaign(
     address _owner,
     string memory _title,
@@ -45,6 +47,7 @@ contract CampaignFunding{
     campaign.image = _image;
     campaign.id = campaignId;
     campaignId++;
+    emit CampaignCreated(campaign);
     return campaignId - 1;
   }
 
@@ -73,10 +76,6 @@ contract CampaignFunding{
     }
   }
 
-  function getDonators(uint256 _id) view public returns (address[] memory, uint256[] memory) {
-    return (s_campaignIdMapping[_id].donators, s_campaignIdMapping[_id].donations);
-  }
-
   function getCampaigns() public view returns (Campaign[] memory) {
     Campaign[] memory allCampaigns = new Campaign[](campaignId);
 
@@ -88,7 +87,15 @@ contract CampaignFunding{
     return allCampaigns;
   }
 
-  function getAmountReceived() public view returns(uint256){
-    return s_amountReceived[msg.sender];
+  function getAmountReceived(address _owner) public view returns(uint256){
+    return s_amountReceived[_owner];
+  }
+
+  function getCampaignCount() public view returns(uint256){
+    return campaignId - 1;
+  }
+
+  function getCampaignDetails(uint256 _id) public view returns(Campaign memory){
+    return s_campaignIdMapping[_id];
   }
 }
