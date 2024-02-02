@@ -70,7 +70,7 @@ const { developmentChains } = require("../helper-hardhat-config");
         });
       });
       describe("Donate Functionality", () => {
-        it("Should update donators and donations", async () => {
+        beforeEach(async () => {
           await campaignFunding.createCampaign(
             owner,
             title,
@@ -82,6 +82,8 @@ const { developmentChains } = require("../helper-hardhat-config");
           await campaignFunding.donate(0, {
             value: ethers.utils.parseEther("0.05"),
           });
+        });
+        it("Should update donators and donations", async () => {
           const campaign = await campaignFunding.getCampaignDetails(0);
           assert.equal(campaign.donators[0].toString(), deployer.address);
           assert.equal(
@@ -90,17 +92,6 @@ const { developmentChains } = require("../helper-hardhat-config");
           );
         });
         it("Should update amount received variable for owner", async () => {
-          await campaignFunding.createCampaign(
-            owner,
-            title,
-            description,
-            target,
-            deadline,
-            image
-          );
-          await campaignFunding.donate(0, {
-            value: ethers.utils.parseEther("0.05"),
-          });
           let amountReceived = await campaignFunding.getAmountReceived(owner);
           assert.equal(
             amountReceived.toString(),
