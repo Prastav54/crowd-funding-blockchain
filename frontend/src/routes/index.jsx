@@ -16,6 +16,8 @@ export const AppRoutes = () => {
   useEffect(() => {
     if (!routingCondition) {
       navigate("/notice");
+    } else {
+      navigate("/dashboard");
     }
   }, [chainId, account]);
 

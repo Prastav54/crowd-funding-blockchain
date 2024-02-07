@@ -9,4 +9,5 @@ const { NoticePage } = lazyImport(
 export const PublicRoutes = [
   { path: "", element: <Navigate to="/notice" /> },
   { path: "notice", element: <NoticePage /> },
+  { path: "/*", element: <Navigate to="." /> },
 ];
