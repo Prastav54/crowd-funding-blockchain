@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { ethers } from "ethers";
 import { Modal } from "web3uikit";
 

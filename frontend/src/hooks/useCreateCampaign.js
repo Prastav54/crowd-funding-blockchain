@@ -8,10 +8,10 @@ export const useCreateCampaign = (data) => {
     _owner: account,
     _title: data["Title"],
     _description: data["Description"],
-    _target: data["Target Amount (in Eth)"]?.[0]
-      ? ethers.utils.parseEther(`${data["Target Amount (in Eth)"][0]}`)
+    _target: data["Target Amount (in Eth)"]
+      ? ethers.utils.parseEther(`${data["Target Amount (in Eth)"]}`)
       : "",
-    _deadline: new Date(data["Deadline"]).getTime() / 1000,
+    _deadline: new Date(data["Deadline"]?.[0]).getTime() / 1000,
     _image: data["Image Url"],
   };
   const { runContractFunction: createCampaigns } = useWeb3Contract({
